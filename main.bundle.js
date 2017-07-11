@@ -52,9 +52,7 @@
 /* 1 */
 /***/ (function(module, exports) {
 
-	module.exports = function () {
-	  alert("Good work there, govna!");
-	};
+
 
 /***/ })
 /******/ ]);
