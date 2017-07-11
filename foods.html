@@ -1,32 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Quantified Self - Manage Foods</title>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <title>Quantified Self - Manage Foods</title>
+  </head>
 
-</head>
-<body class="foods-page">
-  <h1>Manage Foods</h1>
+  <body class="foods-page">
+    <h1>Manage Foods</h1>
 
-  <h3>Add a new food</h3>
-  <form id="newFood" action="http://localhost:7878/api/v1/foods" method="POST">
-    Name: <input type="text" id="newFoodName" value="" /><br>
-    Calories: <input type="integer" id="newFoodCalories" value="" /><br>
-    <input type="submit" value="Submit" />
-  </form>
+    <h3>Add a new food</h3>
+    <form id="newFood" action="http://localhost:7878/api/v1/foods" method="POST">
+      Name: <input type="text" id="newFoodName" value="" /><br>
+      Calories: <input type="integer" id="newFoodCalories" value="" /><br>
+      <input type="submit" value="Submit" />
+    </form>
 
-  <table class="foods-table">
-    <tbody id="table-body">
-        <tr class="table-headers">
-          <th align="left">Name</th>
-          <th align="left">Calories</th>
-        </tr>
-        <tr id="firstRow">
-        </tr>
-      </tbody>
-      </table>
+    <table class="foods-table">
+      <tr class="table-headers">
+        <th align="left">Name</th>
+        <th align="left">Calories</th>
+        <th align="right">Delete</th>
+      </tr>
+    </table>
 
-      <script src="main.bundle.js"></script>
-
-</body>
+    <script src="main.bundle.js"></script>
+  </body>
 </html>
