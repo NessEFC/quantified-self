@@ -45,8 +45,16 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	__webpack_require__(1);
-	var $ = __webpack_require__(5);
+	const $ = __webpack_require__(5);
 	var Food = __webpack_require__(6);
+
+	$(() => {
+	  Food.foodsToHTML().then(foodsHTML => {
+	    foodsHTML.forEach(food => {
+	      $(food).insertAfter('#table-headers');
+	    });
+	  });
+	});
 
 /***/ }),
 /* 1 */
@@ -83,7 +91,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  background-color: lightyellow;\n}\n", ""]);
+	exports.push([module.id, "body {\n  background-color: lightyellow;\n}\n\nbutton#delete-food:hover {\n  cursor: pointer;\n  color: red;\n  box-shadow: 4px 4px 15px red;\n}\n\nbutton#delete-food {\n  box-shadow: 3px 3px 10px #888888;\n}\n", ""]);
 
 	// exports
 
@@ -10659,15 +10667,52 @@
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var $ = __webpack_require__(5);
+	const $ = __webpack_require__(5);
+	const localHost = __webpack_require__(7).localHost;
 
-	// $(document).ready(function() {
-	//   if(window.location === '/foods.html') {
-	//     alert("You're doing a swell job, Craig. Keep it up. Proud of you.")
-	//   }
-	// })
+	class Food {
+	  constructor(food) {
+	    this.id = food.id;
+	    this.name = food.name;
+	    this.calories = food.calories;
+	    this.created_at = food.created_at;
+	    this.updated_at = food.updated_at;
+	  }
 
-	// module.exports = {}
+	  static foodsToHTML() {
+	    return this.getFoods().then(foods => {
+	      return foods.map(food => {
+	        return new Food(food);
+	      });
+	    }).then(foods => {
+	      return foods.map(food => {
+	        return food.toHTML();
+	      });
+	    });
+	  }
+
+	  static getFoods() {
+	    return $.getJSON(localHost + '/foods');
+	  }
+
+	  toHTML() {
+	    return `<tr class="${this.name}" data-id=${this.id}>
+	        <td>${this.name}</td>
+	        <td align="left">${this.calories}</td>
+	        <td align="center"><button id="delete-food"><i class="fa fa-trash"></button></i></td>
+	      </tr>`;
+	  }
+	}
+
+	module.exports = Food;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
+	module.exports = {
+	  localHost: 'http://localhost:7878/api/v1'
+	};
 
 /***/ })
 /******/ ]);
