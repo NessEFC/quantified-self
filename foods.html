@@ -5,13 +5,21 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <title>Quantified Self - Manage Foods</title>
   </head>
+
   <body class="foods-page">
     <h1>Manage Foods</h1>
 
+    <h3>Add a new food</h3>
+    <form id="newFood" action="http://localhost:7878/api/v1/foods" method="POST">
+      Name: <input type="text" id="newFoodName" value="" /><br>
+      Calories: <input type="integer" id="newFoodCalories" value="" /><br>
+      <input type="submit" value="Submit" />
+    </form>
+
     <table class="foods-table">
-      <tr id="table-headers">
+      <tr class="table-headers">
         <th align="left">Name</th>
-        <th>Calories</th>
+        <th align="left">Calories</th>
         <th align="right">Delete</th>
       </tr>
     </table>
