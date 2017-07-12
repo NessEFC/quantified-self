@@ -77,6 +77,13 @@
 	      console.log(error);
 	    });
 	  });
+
+	  $('.foods-table').on('blur', 'tr td:not(:last-child)', function (event) {
+	    let id = parseInt(event.target.parentElement.dataset.id);
+	    let payload = event.target.innerText;
+
+	    Food.update(id, payload);
+	  });
 	});
 
 /***/ }),
@@ -10728,6 +10735,7 @@
 
 	  static deleteFood(id) {
 	    let url = localHost + '/foods/' + id;
+
 	    fetch(url, {
 	      method: 'DELETE',
 	      headers: {
@@ -10737,6 +10745,25 @@
 	      $(`tr[data-id="${id}"]`).remove();
 	    }).catch(function (error) {
 	      console.log('Request failed', error);
+	    });
+	  }
+
+	  static update(id, payload) {
+	    let url = localHost + '/foods/' + id;
+	    let key = isNaN(parseInt(payload)) ? "name" : "calories";
+	    if (key === 'calories') {
+	      payload = parseInt(payload);
+	    }
+	    let options = {};
+	    options[key] = payload;
+
+	    fetch(url, {
+	      method: 'PUT',
+	      headers: {
+	        'Accept': 'application/json',
+	        'Content-Type': 'application/json'
+	      },
+	      body: JSON.stringify(options)
 	    });
 	  }
 	}
