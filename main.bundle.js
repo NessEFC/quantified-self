@@ -53,6 +53,12 @@
 	    foodsHTML.forEach(food => {
 	      $(food).insertAfter('.table-headers');
 	    });
+	    $('.foods-table').on('click', '.delete-food', function (event) {
+	      event.preventDefault();
+
+	      let id = this.closest('tr').dataset.id;
+	      Food.deleteFood(id);
+	    });
 	  });
 
 	  $("#newFood").submit(function (event) {
@@ -61,11 +67,10 @@
 	        url = $form.attr('action');
 	    var posting = $.post(url, { name: $('#newFoodName').val(), calories: $('#newFoodCalories').val() });
 	    posting.done(function (data) {
-	      alert('Success! Your food was created.');
 	      console.log(data);
 	      $('#newFood').trigger("reset");
 	    }).done(function (data) {
-	      var newRow = `<tr id=${data.id}><td>${data.name}</td><td>${data.calories}</td><td align="center"><button id="delete-food"><i class="fa fa-trash"></button></i></td></tr>`;
+	      var newRow = `<tr data-id=${data.id}><td contenteditable="true">${data.name}</td><td contenteditable="true">${data.calories}</td><td align="center"><button class="delete-food"><i class="fa fa-trash"></button></i></td></tr>`;
 	      $(newRow).insertAfter('.table-headers');
 	    }).fail(function (error) {
 	      console.log(error);
@@ -108,7 +113,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  background-color: lightyellow;\n}\n\nbutton#delete-food:hover {\n  cursor: pointer;\n  color: red;\n  box-shadow: 4px 4px 15px red;\n}\n\nbutton#delete-food {\n  box-shadow: 3px 3px 10px #888888;\n}\n", ""]);
+	exports.push([module.id, "body {\n  background-color: lightyellow;\n}\n\nbutton.delete-food:hover {\n  cursor: pointer;\n  color: red;\n  box-shadow: 4px 4px 15px red;\n}\n\nbutton.delete-food {\n  box-shadow: 3px 3px 10px #888888;\n}\n", ""]);
 
 	// exports
 
@@ -10714,10 +10719,24 @@
 
 	  toHTML() {
 	    return `<tr class="${this.name}" data-id=${this.id}>
-	        <td>${this.name}</td>
-	        <td align="left">${this.calories}</td>
-	        <td align="center"><button id="delete-food"><i class="fa fa-trash"></button></i></td>
+	        <td contenteditable="true">${this.name}</td>
+	        <td align="left" contenteditable="true">${this.calories}</td>
+	        <td align="center"><button class="delete-food"><i class="fa fa-trash"></button></i></td>
 	      </tr>`;
+	  }
+
+	  static deleteFood(id) {
+	    let url = localHost + '/foods/' + id;
+	    fetch(url, {
+	      method: 'DELETE',
+	      headers: {
+	        "Content-type": "application/json"
+	      }
+	    }).then(res => res.json()).then(data => {
+	      $(`tr[data-id="${id}"]`).remove();
+	    }).catch(function (error) {
+	      console.log('Request failed', error);
+	    });
 	  }
 	}
 
