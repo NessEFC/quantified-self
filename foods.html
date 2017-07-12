@@ -7,9 +7,9 @@
   </head>
 
   <body class="foods-page">
-
     <header id="header"><h3>MANAGE FOODS</h3></header>
     <foods id="foods">
+      <p><a href="index.html">return to your food diary</a></p>
       <h4>ADD A NEW FOOD:</h4>
       <form id="newFood" action="http://localhost:7878/api/v1/foods" method="POST">
         Name: <input type="text" id="newFoodName" value="" required placeholder="enter a food"
@@ -21,8 +21,8 @@
         <input type="submit" value="Submit" />
       </form>
     </foods>
-
     <diary id="diary">
+      <h4>YOUR SAVED FOODS:</h4>
       <table class="foods-table" cellpadding="10">
         <tr class="table-headers">
           <th align="left">Name</th>
@@ -32,7 +32,7 @@
       </table>
     </diary>
 
-    <footer id="footer">Footer</footer>
+    <footer id="footer"><i>Remember, age and glasses of wine should never be counted.</i></footer>
 
     <script src="main.bundle.js"></script>
   </body>
