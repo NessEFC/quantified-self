@@ -2,12 +2,12 @@ body {
   background-color: lightyellow;
 }
 
-button#delete-food:hover {
+button.delete-food:hover {
   cursor: pointer;
   color: red;
   box-shadow: 4px 4px 15px red;
 }
 
-button#delete-food {
+button.delete-food {
   box-shadow: 3px 3px 10px #888888;
 }
