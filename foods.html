@@ -11,8 +11,12 @@
 
     <h3>Add a new food</h3>
     <form id="newFood" action="http://localhost:7878/api/v1/foods" method="POST">
-      Name: <input type="text" id="newFoodName" value="" /><br>
-      Calories: <input type="integer" id="newFoodCalories" value="" /><br>
+      Name: <input type="text" id="newFoodName" value="" required placeholder="enter a food"
+    oninvalid="this.setCustomValidity('Please enter a food name')"
+    oninput="setCustomValidity('')" /><br>
+      Calories: <input type="integer" id="newFoodCalories" value="" required placeholder="enter a calorie amount"
+    oninvalid="this.setCustomValidity('Please enter a calorie amount')"
+    oninput="setCustomValidity('')" /><br>
       <input type="submit" value="Submit" />
     </form>
 

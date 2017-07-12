@@ -61,8 +61,9 @@
 	        url = $form.attr('action');
 	    var posting = $.post(url, { name: $('#newFoodName').val(), calories: $('#newFoodCalories').val() });
 	    posting.done(function (data) {
-	      alert('success');
+	      alert('Success! Your food was created.');
 	      console.log(data);
+	      $('#newFood').trigger("reset");
 	    }).done(function (data) {
 	      var newRow = `<tr id=${data.id}><td>${data.name}</td><td>${data.calories}</td><td align="center"><button id="delete-food"><i class="fa fa-trash"></button></i></td></tr>`;
 	      $(newRow).insertAfter('.table-headers');
