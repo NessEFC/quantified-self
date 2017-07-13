@@ -9,16 +9,19 @@
   <body class="foods-page">
     <h1>Manage Foods</h1>
 
-    <h3>Add a new food</h3>
+    <h3>Add a Food</h3>
     <form id="newFood" action="http://localhost:7878/api/v1/foods" method="POST">
-      Name: <input type="text" id="newFoodName" value="" required placeholder="enter a food"
+      Name: <input type="text" id="newFoodName" value="" required placeholder="Enter a food"
     oninvalid="this.setCustomValidity('Please enter a food name')"
     oninput="setCustomValidity('')" /><br>
-      Calories: <input type="integer" id="newFoodCalories" value="" required placeholder="enter a calorie amount"
+      Calories: <input type="integer" id="newFoodCalories" value="" required placeholder="Enter a calorie amount"
     oninvalid="this.setCustomValidity('Please enter a calorie amount')"
     oninput="setCustomValidity('')" /><br>
-      <input type="submit" value="Submit" />
+      <input type="submit" value="Add Food" />
     </form>
+
+    <h5>Filter by Name</h5>
+    <input type="text" id="foods-filter" placeholder="Search for a food...">
 
     <table class="foods-table">
       <tr class="table-headers">

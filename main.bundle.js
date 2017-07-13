@@ -83,6 +83,10 @@
 
 	    Food.update(id, payload);
 	  });
+
+	  $('#foods-filter').on('keyup', function (event) {
+	    Food.filterFood(event);
+	  });
 	});
 
 /***/ }),
@@ -10763,6 +10767,23 @@
 	        'Content-Type': 'application/json'
 	      },
 	      body: JSON.stringify(options)
+	    });
+	  }
+
+	  static filterFood(event) {
+	    let filter = event.target.value.toLowerCase();
+	    let table = $('.foods-table');
+	    let rows = table.find('tr').not(':first');
+
+	    rows = Array.from(rows);
+
+	    rows.map(row => {
+	      let name = row.getElementsByTagName('td')[0].innerText.toLowerCase();
+	      if (name.indexOf(filter) > -1) {
+	        row.style.display = "";
+	      } else {
+	        row.style.display = "none";
+	      }
 	    });
 	  }
 	}
