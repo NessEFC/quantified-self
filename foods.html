@@ -9,13 +9,13 @@
   <body class="foods-page">
     <header id="header"><h3>MANAGE FOODS</h3></header>
     <foods id="foods">
-      <p><a href="index.html">return to your food diary</a></p>
+      <p><a href="index.html">Return to Diary</a></p>
       <h4>ADD A NEW FOOD:</h4>
       <form id="newFood" action="http://localhost:7878/api/v1/foods" method="POST">
-        Name: <input type="text" id="newFoodName" value="" required placeholder="enter a food"
+        Name: <input type="text" id="newFoodName" value="" required placeholder="Enter a food"
       oninvalid="this.setCustomValidity('Please enter a food name')"
       oninput="setCustomValidity('')" /><br>
-        Calories: <input type="integer" id="newFoodCalories" value="" required placeholder="enter a calorie amount"
+        Calories: <input type="integer" id="newFoodCalories" value="" required placeholder="Enter a calorie amount"
       oninvalid="this.setCustomValidity('Please enter a calorie amount')"
       oninput="setCustomValidity('')" /><br>
         <input type="submit" value="Submit" />
@@ -23,6 +23,10 @@
     </foods>
     <diary id="diary">
       <h4>YOUR SAVED FOODS:</h4>
+
+      <h5>Filter by Name</h5>
+      <input type="text" id="foods-filter" placeholder="Search for a food...">
+
       <table class="foods-table" cellpadding="10">
         <tr class="table-headers">
           <th align="left">Name</th>
@@ -31,31 +35,8 @@
         </tr>
       </table>
     </diary>
-    
-    <h3>Add a Food</h3>
-    <form id="newFood" action="http://localhost:7878/api/v1/foods" method="POST">
-      Name: <input type="text" id="newFoodName" value="" required placeholder="Enter a food"
-    oninvalid="this.setCustomValidity('Please enter a food name')"
-    oninput="setCustomValidity('')" /><br>
-      Calories: <input type="integer" id="newFoodCalories" value="" required placeholder="Enter a calorie amount"
-    oninvalid="this.setCustomValidity('Please enter a calorie amount')"
-    oninput="setCustomValidity('')" /><br>
-      <input type="submit" value="Add Food" />
-    </form>
-
-    <h5>Filter by Name</h5>
-    <input type="text" id="foods-filter" placeholder="Search for a food...">
-
-    <table class="foods-table">
-      <tr class="table-headers">
-        <th align="left">Name</th>
-        <th align="left">Calories</th>
-        <th align="right">Delete</th>
-      </tr>
-    </table>
 
     <footer id="footer"><i>Remember, age and glasses of wine should never be counted.</i></footer>
-
 
     <script src="main.bundle.js"></script>
   </body>
