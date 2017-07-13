@@ -10787,8 +10787,8 @@
 
 	  toMealHTML() {
 	    return `<tr class="${this.name}" data-id=${this.id}>
-	        <td contenteditable="true">${this.name}</td>
-	        <td align="left" contenteditable="true">${this.calories}</td>
+	        <td>${this.name}</td>
+	        <td align="left">${this.calories}</td>
 	        <td align="center"><button class="delete-food"><i class="fa fa-trash"></button></i></td>
 	      </tr>`;
 	  }
