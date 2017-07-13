@@ -46,7 +46,7 @@
 
 	__webpack_require__(1);
 	const $ = __webpack_require__(5);
-	const localHost = __webpack_require__(6).localHost;
+	const host = __webpack_require__(6).host;
 	const Food = __webpack_require__(7);
 	const Meal = __webpack_require__(8);
 	const insertRow = function (data) {
@@ -68,28 +68,28 @@
 	    });
 	  });
 
-	  $.ajax({ url: `${localHost}/meals/1` }).done(function (data) {
+	  $.ajax({ url: `${host}/meals/1` }).done(function (data) {
 	    let meal = Meal.getFoods(data);
 	    meal.map(function (meal) {
 	      $(meal).insertAfter(`.1-headers`);
 	    });
 	  });
 
-	  $.ajax({ url: `${localHost}/meals/2` }).done(function (data) {
+	  $.ajax({ url: `${host}/meals/2` }).done(function (data) {
 	    let meal = Meal.getFoods(data);
 	    meal.map(function (meal) {
 	      $(meal).insertAfter(`.2-headers`);
 	    });
 	  });
 
-	  $.ajax({ url: `${localHost}/meals/3` }).done(function (data) {
+	  $.ajax({ url: `${host}/meals/3` }).done(function (data) {
 	    let meal = Meal.getFoods(data);
 	    meal.map(function (meal) {
 	      $(meal).insertAfter(`.3-headers`);
 	    });
 	  });
 
-	  $.ajax({ url: `${localHost}/meals/4` }).done(function (data) {
+	  $.ajax({ url: `${host}/meals/4` }).done(function (data) {
 	    let meal = Meal.getFoods(data);
 	    meal.map(function (meal) {
 	      $(meal).insertAfter(`.4-headers`);
@@ -10730,7 +10730,7 @@
 /***/ (function(module, exports) {
 
 	module.exports = {
-	  localHost: 'https://localhost:7878/api/v1'
+	  host: 'https://quantified-self-be-bassiness.herokuapp.com/api/v1'
 	};
 
 /***/ }),
@@ -10738,7 +10738,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	const $ = __webpack_require__(5);
-	const localHost = __webpack_require__(6).localHost;
+	const host = __webpack_require__(6).host;
 
 	class Food {
 	  constructor(food) {
@@ -10766,7 +10766,7 @@
 	  }
 
 	  static getFoods() {
-	    return $.getJSON(localHost + '/foods');
+	    return $.getJSON(host + '/foods');
 	  }
 
 	  toHTMLDiary(data) {
@@ -10794,7 +10794,7 @@
 	  }
 
 	  static deleteFood(id) {
-	    let url = localHost + '/foods/' + id;
+	    let url = host + '/foods/' + id;
 
 	    fetch(url, {
 	      method: 'DELETE',
@@ -10809,7 +10809,7 @@
 	  }
 
 	  static update(id, payload) {
-	    let url = localHost + '/foods/' + id;
+	    let url = host + '/foods/' + id;
 	    let key = isNaN(parseInt(payload)) ? "name" : "calories";
 	    if (key === 'calories') {
 	      payload = parseInt(payload);
@@ -10852,7 +10852,7 @@
 /***/ (function(module, exports, __webpack_require__) {
 
 	const $ = __webpack_require__(5);
-	const localHost = __webpack_require__(6).localHost;
+	const host = __webpack_require__(6).host;
 	const Food = __webpack_require__(7);
 
 	class Meal {
