@@ -46,10 +46,11 @@
 
 	__webpack_require__(1);
 	const $ = __webpack_require__(5);
-	const Food = __webpack_require__(6);
+	const localHost = __webpack_require__(6).localHost;
+	const Food = __webpack_require__(7);
+	const Meal = __webpack_require__(8);
 	const insertRow = function (data) {
 	  $('#newFood').trigger("reset");
-	  // i think we could use Food.findLastFoodCreated here (from backend) and/or Food.toHTML to populate?
 	  var newRow = `<tr data-id=${data.id}><td contenteditable="true">${data.name}</td><td contenteditable="true">${data.calories}</td><td align="center"><button class="delete-food"><i class="fa fa-trash"></button></i></td></tr>`;
 	  $(newRow).insertAfter('.table-headers');
 	};
@@ -58,6 +59,7 @@
 	  Food.foodsToHTML().then(foodsHTML => {
 	    foodsHTML.forEach(food => {
 	      $(food).insertAfter('.table-headers');
+	      $(food).insertAfter('.diary-table-headers');
 	    });
 	    $('.foods-table').on('click', '.delete-food', function (event) {
 	      event.preventDefault();
@@ -10697,10 +10699,18 @@
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports) {
+
+	module.exports = {
+	  localHost: 'http://localhost:7878/api/v1'
+	};
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	const $ = __webpack_require__(5);
-	const localHost = __webpack_require__(7).localHost;
+	const localHost = __webpack_require__(6).localHost;
 
 	class Food {
 	  constructor(food) {
@@ -10718,13 +10728,25 @@
 	      });
 	    }).then(foods => {
 	      return foods.map(food => {
-	        return food.toHTML();
+	        if ($('.table-headers').length) {
+	          return food.toHTML();
+	        } else if ($('.diary-table-headers').length) {
+	          return food.toHTMLDiary();
+	        }
 	      });
 	    });
 	  }
 
 	  static getFoods() {
 	    return $.getJSON(localHost + '/foods');
+	  }
+
+	  toHTMLDiary(data) {
+	    return `<tr class="${this.name}" data-id=${this.id}>
+	        <td>${this.name}</td>
+	        <td align="left">${this.calories}</td>
+	        <td align="center"><input class="checkbox" type="checkbox"></td>
+	      </tr>`;
 	  }
 
 	  toHTML() {
@@ -10790,12 +10812,38 @@
 	module.exports = Food;
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports) {
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = {
-	  localHost: 'http://localhost:7878/api/v1'
-	};
+	const $ = __webpack_require__(5);
+	const localHost = __webpack_require__(6).localHost;
+
+	class Meal {
+	  constructor(meal) {
+	    this.id = meal.id;
+	    this.name = meal.name;
+	    this.goal_calories = meal.goal_calories;
+	    this.created_at = meal.created_at;
+	  }
+
+	  static mealsToHTML() {
+	    return this.getMeals().then(meals => {
+	      return meals.map(meal => {
+	        return new Meal(meal);
+	      });
+	    }).then(meals => {
+	      return meals.map(meal => {
+	        return meal.toHTML();
+	      });
+	    });
+	  }
+
+	  static getMeals() {
+	    return $.getJSON(`localHost + '/meal' + ${this.id}`);
+	  }
+	}
+
+	module.exports = Meal;
 
 /***/ })
 /******/ ]);
