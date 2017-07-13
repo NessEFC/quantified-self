@@ -1,13 +1,103 @@
-body {
-  background-color: lightyellow;
-}
-
 button.delete-food:hover {
   cursor: pointer;
   color: red;
-  box-shadow: 4px 4px 15px red;
+  box-shadow: 4px 4px 15px #ef5323;
 }
 
 button.delete-food {
   box-shadow: 3px 3px 10px #888888;
+}
+
+/*CSS Grid lives below inside body*/
+body {
+  background-color: teal;
+  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  display: grid;
+  grid-template-areas:
+    "header header header header"
+    "foods foods diary diary"
+    "footer footer footer footer";
+  grid-template-rows: 80px 1fr 70px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+  height: 100vh;
+  margin: 10;
+  }
+header, footer, diary, foods {
+  padding: 1.2em;
+  background: white;
+  }
+#header {
+  grid-area: header;
+  }
+#footer {
+  grid-area: footer;
+  }
+#diary {
+  grid-area: diary;
+  }
+#foods {
+  grid-area: foods;
+  }
+/* Stack the layout on small devices/viewports. */
+@media all and (max-width: 575px) {
+  body {
+    grid-template-areas:
+      "header"
+      "diary"
+      "foods"
+      "footer";
+    grid-template-rows: 80px 1fr 1fr 1fr 70px;
+    grid-template-columns: 1fr;
+ }
+}
+
+/*The form*/
+#newFood {
+    margin-left:auto;
+    margin-right:auto;
+    max-width: 500px;
+    background: #FFF;
+    padding: 25px 15px 25px 10px;
+    font: 12px 'Open Sans', Helvetica, Arial, sans-serif;
+    color: #000;
+    /*text-shadow: 1px 1px 1px #FFF;*/
+    /*border:1px solid #E4E4E4;*/
+}
+
+#newFood input[type="text"], #newFood input[type="integer"], #newFood textarea, #newFood select {
+    border: 1px solid #DADADA;
+    color: #000;
+    height: 30px;
+    margin-bottom: 16px;
+    margin-right: 6px;
+    margin-top: 2px;
+    /*outline: 30 none;*/
+    padding: 3px 3px 3px 5px;
+    width: 70%;
+    font-size: 12px;
+    /*line-height:15px;*/
+    /*box-shadow: inset 0px 1px 4px #ECECEC;*/
+    /*-moz-box-shadow: inset 0px 1px 4px #ECECEC;*/
+    /*-webkit-box-shadow: inset 0px 1px 4px #ECECEC;*/
+}
+#newFood textarea{
+    padding: 5px 3px 3px 5px;
+}
+
+#newFood textarea{
+    height:100px;
+  }
+#newFood input[type="submit"] {
+    background: #Ef5323;
+    border: none;
+    padding: 10px 25px 10px 25px;
+    color: #FFF;
+    box-shadow: 3px 3px 10px #888888;
+    text-shadow: 0px 0px 0px #9E3F3F;
+    cursor: pointer;
+}
+#newFood input[type="submit"]:hover {
+    background: #CF7A7A
 }

@@ -7,26 +7,32 @@
   </head>
 
   <body class="foods-page">
-    <h1>Manage Foods</h1>
+    <header id="header"><h3>MANAGE FOODS</h3></header>
+    <foods id="foods">
+      <p><a href="index.html">return to your food diary</a></p>
+      <h4>ADD A NEW FOOD:</h4>
+      <form id="newFood" action="http://localhost:7878/api/v1/foods" method="POST">
+        Name: <input type="text" id="newFoodName" value="" required placeholder="enter a food"
+      oninvalid="this.setCustomValidity('Please enter a food name')"
+      oninput="setCustomValidity('')" /><br>
+        Calories: <input type="integer" id="newFoodCalories" value="" required placeholder="enter a calorie amount"
+      oninvalid="this.setCustomValidity('Please enter a calorie amount')"
+      oninput="setCustomValidity('')" /><br>
+        <input type="submit" value="Submit" />
+      </form>
+    </foods>
+    <diary id="diary">
+      <h4>YOUR SAVED FOODS:</h4>
+      <table class="foods-table" cellpadding="10">
+        <tr class="table-headers">
+          <th align="left">Name</th>
+          <th align="left">Calories</th>
+          <th align="right">Delete</th>
+        </tr>
+      </table>
+    </diary>
 
-    <h3>Add a new food</h3>
-    <form id="newFood" action="http://localhost:7878/api/v1/foods" method="POST">
-      Name: <input type="text" id="newFoodName" value="" required placeholder="enter a food"
-    oninvalid="this.setCustomValidity('Please enter a food name')"
-    oninput="setCustomValidity('')" /><br>
-      Calories: <input type="integer" id="newFoodCalories" value="" required placeholder="enter a calorie amount"
-    oninvalid="this.setCustomValidity('Please enter a calorie amount')"
-    oninput="setCustomValidity('')" /><br>
-      <input type="submit" value="Submit" />
-    </form>
-
-    <table class="foods-table">
-      <tr class="table-headers">
-        <th align="left">Name</th>
-        <th align="left">Calories</th>
-        <th align="right">Delete</th>
-      </tr>
-    </table>
+    <footer id="footer"><i>Remember, age and glasses of wine should never be counted.</i></footer>
 
     <script src="main.bundle.js"></script>
   </body>
