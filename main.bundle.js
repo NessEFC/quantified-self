@@ -10730,7 +10730,7 @@
 /***/ (function(module, exports) {
 
 	module.exports = {
-	  localHost: 'http://localhost:7878/api/v1'
+	  localHost: 'https://localhost:7878/api/v1'
 	};
 
 /***/ }),
