@@ -47,6 +47,12 @@
 	__webpack_require__(1);
 	const $ = __webpack_require__(5);
 	const Food = __webpack_require__(6);
+	const insertRow = function (data) {
+	  $('#newFood').trigger("reset");
+	  // i think we could use Food.findLastFoodCreated here (from backend) and/or Food.toHTML to populate?
+	  var newRow = `<tr data-id=${data.id}><td contenteditable="true">${data.name}</td><td contenteditable="true">${data.calories}</td><td align="center"><button class="delete-food"><i class="fa fa-trash"></button></i></td></tr>`;
+	  $(newRow).insertAfter('.table-headers');
+	};
 
 	$(() => {
 	  Food.foodsToHTML().then(foodsHTML => {
@@ -55,7 +61,6 @@
 	    });
 	    $('.foods-table').on('click', '.delete-food', function (event) {
 	      event.preventDefault();
-
 	      let id = this.closest('tr').dataset.id;
 	      Food.deleteFood(id);
 	    });
@@ -66,14 +71,7 @@
 	    var $form = $(this),
 	        url = $form.attr('action');
 	    var posting = $.post(url, { name: $('#newFoodName').val(), calories: $('#newFoodCalories').val() });
-	    posting.done(function () {
-	      // pull out anonymous functions and name them!
-	      $('#newFood').trigger("reset");
-	    }).done(function (data) {
-	      // i think we could use Food.findLastFoodCreated here (from backend) and/or Food.toHTML to populate?
-	      var newRow = `<tr data-id=${data.id}><td contenteditable="true">${data.name}</td><td contenteditable="true">${data.calories}</td><td align="center"><button class="delete-food"><i class="fa fa-trash"></button></i></td></tr>`;
-	      $(newRow).insertAfter('.table-headers');
-	    }).fail(function (error) {
+	    posting.done(insertRow).fail(function (error) {
 	      console.log(error);
 	    });
 	  });
@@ -83,6 +81,10 @@
 	    let payload = event.target.innerText;
 
 	    Food.update(id, payload);
+	  });
+
+	  $('#foods-filter').on('keyup', function (event) {
+	    Food.filterFood(event);
 	  });
 	});
 
@@ -121,7 +123,7 @@
 
 
 	// module
-	exports.push([module.id, "body {\n  background-color: lightyellow;\n}\n\nbutton.delete-food:hover {\n  cursor: pointer;\n  color: red;\n  box-shadow: 4px 4px 15px red;\n}\n\nbutton.delete-food {\n  box-shadow: 3px 3px 10px #888888;\n}\n", ""]);
+	exports.push([module.id, "button.delete-food:hover {\n  cursor: pointer;\n  color: red;\n  box-shadow: 4px 4px 15px #ef5323;\n}\n\nbutton.delete-food {\n  box-shadow: 3px 3px 10px #888888;\n}\n\n/*CSS Grid lives below inside body*/\nbody {\n  background-color: teal;\n  font-family: 'Open Sans', Helvetica, Arial, sans-serif;\n  display: grid;\n  grid-template-areas:\n    \"header header header header\"\n    \"foods foods diary diary\"\n    \"footer footer footer footer\";\n  grid-template-rows: 80px 1fr 70px;\n  grid-template-columns: 1fr 1fr 1fr 1fr;\n  grid-row-gap: 10px;\n  grid-column-gap: 10px;\n  height: 100vh;\n  margin: 10;\n  }\nheader, footer, diary, foods {\n  padding: 1.2em;\n  background: white;\n  }\n#header {\n  grid-area: header;\n  }\n#footer {\n  grid-area: footer;\n  }\n#diary {\n  grid-area: diary;\n  }\n#foods {\n  grid-area: foods;\n  }\n/* Stack the layout on small devices/viewports. */\n@media all and (max-width: 575px) {\n  body {\n    grid-template-areas:\n      \"header\"\n      \"diary\"\n      \"foods\"\n      \"footer\";\n    grid-template-rows: 80px 1fr 1fr 1fr 70px;\n    grid-template-columns: 1fr;\n }\n}\n\n/*The form*/\n#newFood {\n    margin-left:auto;\n    margin-right:auto;\n    max-width: 500px;\n    background: #FFF;\n    padding: 25px 15px 25px 10px;\n    font: 12px 'Open Sans', Helvetica, Arial, sans-serif;\n    color: #000;\n    /*text-shadow: 1px 1px 1px #FFF;*/\n    /*border:1px solid #E4E4E4;*/\n}\n\n#newFood input[type=\"text\"], #newFood input[type=\"integer\"], #newFood textarea, #newFood select {\n    border: 1px solid #DADADA;\n    color: #000;\n    height: 30px;\n    margin-bottom: 16px;\n    margin-right: 6px;\n    margin-top: 2px;\n    /*outline: 30 none;*/\n    padding: 3px 3px 3px 5px;\n    width: 70%;\n    font-size: 12px;\n    /*line-height:15px;*/\n    /*box-shadow: inset 0px 1px 4px #ECECEC;*/\n    /*-moz-box-shadow: inset 0px 1px 4px #ECECEC;*/\n    /*-webkit-box-shadow: inset 0px 1px 4px #ECECEC;*/\n}\n#newFood textarea{\n    padding: 5px 3px 3px 5px;\n}\n\n#newFood textarea{\n    height:100px;\n  }\n#newFood input[type=\"submit\"] {\n    background: #Ef5323;\n    border: none;\n    padding: 10px 25px 10px 25px;\n    color: #FFF;\n    box-shadow: 3px 3px 10px #888888;\n    text-shadow: 0px 0px 0px #9E3F3F;\n    cursor: pointer;\n}\n#newFood input[type=\"submit\"]:hover {\n    background: #CF7A7A\n}\n", ""]);
 
 	// exports
 
@@ -10764,6 +10766,23 @@
 	        'Content-Type': 'application/json'
 	      },
 	      body: JSON.stringify(options)
+	    });
+	  }
+
+	  static filterFood(event) {
+	    let filter = event.target.value.toLowerCase();
+	    let table = $('.foods-table');
+	    let rows = table.find('tr').not(':first');
+
+	    rows = Array.from(rows);
+
+	    rows.map(row => {
+	      let name = row.getElementsByTagName('td')[0].innerText.toLowerCase();
+	      if (name.indexOf(filter) > -1) {
+	        row.style.display = "";
+	      } else {
+	        row.style.display = "none";
+	      }
 	    });
 	  }
 	}
