@@ -68,6 +68,34 @@
 	    });
 	  });
 
+	  $.ajax({ url: `${localHost}/meals/1` }).done(function (data) {
+	    let meal = Meal.getFoods(data);
+	    meal.map(function (meal) {
+	      $(meal).insertAfter(`.1-headers`);
+	    });
+	  });
+
+	  $.ajax({ url: `${localHost}/meals/2` }).done(function (data) {
+	    let meal = Meal.getFoods(data);
+	    meal.map(function (meal) {
+	      $(meal).insertAfter(`.2-headers`);
+	    });
+	  });
+
+	  $.ajax({ url: `${localHost}/meals/3` }).done(function (data) {
+	    let meal = Meal.getFoods(data);
+	    meal.map(function (meal) {
+	      $(meal).insertAfter(`.3-headers`);
+	    });
+	  });
+
+	  $.ajax({ url: `${localHost}/meals/4` }).done(function (data) {
+	    let meal = Meal.getFoods(data);
+	    meal.map(function (meal) {
+	      $(meal).insertAfter(`.4-headers`);
+	    });
+	  });
+
 	  $("#newFood").submit(function (event) {
 	    event.preventDefault();
 	    var $form = $(this),
@@ -10757,6 +10785,14 @@
 	      </tr>`;
 	  }
 
+	  toMealHTML() {
+	    return `<tr class="${this.name}" data-id=${this.id}>
+	        <td contenteditable="true">${this.name}</td>
+	        <td align="left" contenteditable="true">${this.calories}</td>
+	        <td align="center"><button class="delete-food"><i class="fa fa-trash"></button></i></td>
+	      </tr>`;
+	  }
+
 	  static deleteFood(id) {
 	    let url = localHost + '/foods/' + id;
 
@@ -10817,6 +10853,7 @@
 
 	const $ = __webpack_require__(5);
 	const localHost = __webpack_require__(6).localHost;
+	const Food = __webpack_require__(7);
 
 	class Meal {
 	  constructor(meal) {
@@ -10826,21 +10863,15 @@
 	    this.created_at = meal.created_at;
 	  }
 
-	  static mealsToHTML() {
-	    return this.getMeals().then(meals => {
-	      return meals.map(meal => {
-	        return new Meal(meal);
-	      });
-	    }).then(meals => {
-	      return meals.map(meal => {
-	        return meal.toHTML();
-	      });
+	  static getFoods(foods) {
+	    let allFoods = foods.map(food => {
+	      return new Food(food);
+	    });
+	    return allFoods.map(mealFood => {
+	      return mealFood.toMealHTML();
 	    });
 	  }
 
-	  static getMeals() {
-	    return $.getJSON(`localHost + '/meal' + ${this.id}`);
-	  }
 	}
 
 	module.exports = Meal;
