@@ -66,10 +66,11 @@
 	    var $form = $(this),
 	        url = $form.attr('action');
 	    var posting = $.post(url, { name: $('#newFoodName').val(), calories: $('#newFoodCalories').val() });
-	    posting.done(function (data) {
-	      console.log(data);
+	    posting.done(function () {
+	      // pull out anonymous functions and name them!
 	      $('#newFood').trigger("reset");
 	    }).done(function (data) {
+	      // i think we could use Food.findLastFoodCreated here (from backend) and/or Food.toHTML to populate?
 	      var newRow = `<tr data-id=${data.id}><td contenteditable="true">${data.name}</td><td contenteditable="true">${data.calories}</td><td align="center"><button class="delete-food"><i class="fa fa-trash"></button></i></td></tr>`;
 	      $(newRow).insertAfter('.table-headers');
 	    }).fail(function (error) {

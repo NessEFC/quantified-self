@@ -1,7 +1,7 @@
 // const assert = require('chai').assert
 // const webdriver = require('selenium-webdriver')
 // const until = webdriver.until
-// const test = requre('selenium-webdriver/testing')
+// const test = require('selenium-webdriver/testing')
 // const frontEndLocation = "http://localhost:8080"
 //
 // describe('Filling in food fields', function() {
@@ -29,29 +29,3 @@
 //     .click()
 //     })
 // })
-//
-// // const Meal = require("../lib/meal")
-// //
-// // describe('Meal', function() {
-// //   it('can turn an api response into HTML', function(done) {
-// //     var APIresponse = new Promise(function(resolve, reject){
-// //       resp;ve({}
-// //         name: "Breakfast",
-// //       goal_calories: 400,
-// //       foods: [
-// //         {
-// //           name: "Banana",
-// //           calories: 35
-// //         }
-// //       ]
-// //     })
-// //       if(false)
-// //       reject("nope")
-// //     })
-// //     Meal.fromAPIToHTML(APIResponse)
-// //     .then(function(mealHTML){
-// //       assert.include("Banana". mealHTML)
-// //     })
-// //     done()
-// //   })
-// // })
